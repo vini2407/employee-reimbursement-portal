@@ -1,0 +1,27 @@
+<h3>Submit Reimbursement Bill</h3>
+
+<%= form_with model: @bill, local: true do |f| %>
+  <div class="mb-3">
+    <%= f.label :bill_type, "Type" %>
+    <%= f.select :bill_type, Bill.bill_types.keys.map { |t| [t.titleize, t] }, {}, { class: "form-select" } %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :amount, "Amount" %>
+    <%= f.number_field :amount, step: 0.01, class: "form-control", required: true %>
+  </div>
+
+  <%= f.submit "Submit Bill", class: "btn btn-success" %>
+<% end %>
+
+<script>
+  $(document).ready(function() {
+    $("form").on("submit", function() {
+      let amount = $("#bill_amount").val();
+      if (amount <= 0) {
+        alert("Amount must be greater than 0!");
+        return false;
+      }
+    });
+  });
+</script>

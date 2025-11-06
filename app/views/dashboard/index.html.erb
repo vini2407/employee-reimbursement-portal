@@ -1,0 +1,8 @@
+<h3>Redirecting to your dashboard...</h3>
+<p>If not redirected, click below:</p>
+
+<% if current_user.admin? %>
+  <%= link_to "Go to Employee List", employees_path, class: "btn btn-primary" %>
+<% else %>
+  <%= link_to "Go to My Bills", bills_path, class: "btn btn-primary" %>
+<% end %>

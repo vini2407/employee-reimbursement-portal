@@ -1,0 +1,28 @@
+<%= form_with model: @employee, local: true do |f| %>
+  <div class="mb-3">
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name, class: "form-control", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name, class: "form-control", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :email %>
+    <%= f.email_field :email, class: "form-control", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :designation %>
+    <%= f.text_field :designation, class: "form-control", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :department_id, "Department" %>
+    <%= f.collection_select :department_id, Department.all, :id, :name, { prompt: "Select Department" }, { class: "form-select" } %>
+  </div>
+
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>

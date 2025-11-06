@@ -1,0 +1,42 @@
+<h3><%= current_user.admin? ? "All Bills" : "My Submitted Bills" %></h3>
+
+<table class="table table-bordered table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th>Type</th>
+      <th>Amount</th>
+      <th>Status</th>
+      <% if current_user.admin? %><th>Submitted By</th><th>Actions</th><% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @bills.each do |bill| %>
+      <tr>
+        <td><%= bill.bill_type.titleize %></td>
+        <td>₹<%= bill.amount %></td>
+        <td>
+          <% case bill.status
+             when "approved" %>
+               <span class="badge bg-success">Approved</span>
+          <% when "rejected" %>
+               <span class="badge bg-danger">Rejected</span>
+          <% else %>
+               <span class="badge bg-warning text-dark">Pending</span>
+          <% end %>
+        </td>
+
+        <% if current_user.admin? %>
+          <td><%= bill.submitted_by.name %></td>
+          <td>
+            <%= link_to "Approve", approve_bill_path(bill), method: :patch, class: "btn btn-sm btn-success" %>
+            <%= link_to "Reject", reject_bill_path(bill), method: :patch, class: "btn btn-sm btn-danger" %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if current_user.employee? %>
+  <%= link_to "Submit New Bill", new_bill_path, class: "btn btn-primary" %>
+<% end %>
